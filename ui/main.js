@@ -5,12 +5,20 @@ var button = document.getElementById('counter');
 var counter = 0;
 button.onclick = function(){
     
-    //Request to end point
-    
+    //Create request
+    var request = new XMLHttpRequest();
     //Capture response and store to variable
-    
-    //Render the variable in correct span
-    counter = counter +1;
-    var span = document.getElementById('count');
-    span.innerHTML = counter.toString();
+    request.onreadystatechange = function(){
+        if (request.ready.State === XMLHttpRequest.DONE){
+            //Action
+            if(request.status === 200){
+                var counter = request.responseText;
+                var span = document.getElementById('count');
+                span.innerHTML = counter.toString();
+            }
+        }
+    };
+    //Make request
+    request.open('GET', 'http://sooraj1990.imad.hasura-app.io/counter', true);
+    request.send(null);
 };
